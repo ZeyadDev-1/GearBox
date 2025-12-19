@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="https://akts.bau.edu.tr/bilgipaketi/index/ders/ders_id/9062/program_kodu/04052101/h/234/s/7/st/D/ln/en" th:text="#{navbar.brand}">GearBox</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#navbarSupportedContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/" th:text="#{navbar.home}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/add_product" th:if="${session.adminLoggedIn}" th:text="#{navbar.add_product}">Add Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="${session.adminLoggedIn} ? '/admin' : '/admin/login'"
+                               th:text="${session.adminLoggedIn} ? #{navbar.admin_dashboard} : #{navbar.admin_login}"></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" 
+                               data-bs-toggle="dropdown" th:text="#{navbar.categories}">
+                                Categories
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li th:each="category : ${categories}">
+                                    <a class="dropdown-item" th:href="@{'/?category=' + ${category}}"
+                                       th:text="${category}"></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/about_us" th:text="#{navbar.about_us}">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contact_us" th:text="#{navbar.contact_us}">Contact Us</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center cart">
+                        <a href="/cart" class="nav-link text-dark" th:text="#{navbar.cart}">Cart</a>
+                        <form th:action="@{/search}" method="get" class="d-flex">
+                            <input class="form-control me-2" type="search" name="keyword" 
+                                   th:placeholder="#{navbar.search.placeholder}" th:value="${keyword}">
+                            <ul class="list-group" th:if="${searchResults != null and not #lists.isEmpty(searchResults)}">
+                                <li class="list-group-item" th:each="result : ${searchResults}">
+                                    <a th:href="@{'/product/' + ${result.id}}" 
+                                       th:text="${result.name} ?: 'Unknown Product'"></a>
+                                </li>
+                            </ul>
+                            <p class="no-results-message" th:if="${searchResults != null and #lists.isEmpty(searchResults)}"
+                               th:text="#{navbar.search.no_results}">
+                                No Product with such Name
+                            </p>
+                        </form>
+                        <div class="lang-bar">
+                            <a href="?language=tr" th:text="'Türkçe'"></a> | <a href="?language=en" th:text="'English'"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

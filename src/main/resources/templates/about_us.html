@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{about_us.title}">About Us - GearBox</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/about_us.css}">
+</head>
+<body>
+    <div th:replace="~{navbar :: header}"></div>
+    <div class="container about-section">
+        <h1 class="text-center mb-4" th:text="#{about_us.title}">About GearBox</h1>
+        <p class="lead text-center" th:text="#{about_us.Welcome_to_GearBox}">
+            Welcome to GearBox, your one-stop online store for all things tech, fashion, and more!
+        </p>
+        <div class="founder-info" >
+            <h2 th:text="#{about_us.founder}">Our Founders</h2>
+            <p th:text="#{about_us.founder_text}">
+                GearBox was founded by two college friends, Ziad and Omar, who shared a passion for technology and entrepreneurship. 
+                During their time at university, they noticed a gap in the market for a reliable e-commerce platform that offered a 
+                seamless shopping experience for tech enthusiasts and everyday shoppers alike. With Ziad's expertise in software development 
+                and Omar's knack for business strategy, they teamed up to create GearBox in 2025, aiming to bring quality products and 
+                exceptional customer service to users worldwide.
+            </p>
+        </div>
+        <div class="mission-vision">
+            <h2 th:text="#{about_us.mission}">Our Mission</h2>
+            <p th:text="#{about_us.mission_text}">
+                At GearBox, our mission is to simplify online shopping by offering a curated selection of products across categories like 
+                laptops, headphones, mobiles, electronics, toys, and fashion. We strive to provide our customers with the best prices, 
+                detailed product information, and a user-friendly platform that makes shopping a breeze.
+            </p>
+            <h2 th:text="#{about_us.vision}">Our Vision</h2>
+            <p th:text="#{about_us.vision_text}">
+                We envision GearBox as a global leader in e-commerce, known for innovation, reliability, and customer satisfaction. 
+                Our goal is to continuously expand our product offerings, integrate cutting-edge technology, and build a community of 
+                happy customers who trust GearBox for all their shopping needs.
+            </p>
+        </div>
+        <div class="text-center mt-5">
+            <p th:text="#{about_us.journey}">Join us on this exciting journey, and let GearBox be your go-to destination for quality products!</p>
+        </div>
+    </div>
+	
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

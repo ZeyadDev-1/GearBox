@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <th:block th:include="navbar"></th:block>
+    <div class="grid-container">
+        <div th:if="${#lists.isEmpty(products)}" class="text-center no-products">
+            <h2 th:text="#{home.no_products}">No Products Available</h2>
+        </div>
+        <div th:unless="${#lists.isEmpty(products)}" class="flex-grid">
+            <div class="card" th:each="product : ${products}">
+                <a th:href="@{'/product/' + ${product.id}}" class="card-link">
+                    <img th:src="@{'/product/' + ${product.id} + '/image'}" 
+                         th:alt="${product.name}" class="card-img-top"
+                         onerror="this.src='/images/placeholder.jpg'">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${#strings.toUpperCase(product.name)}"></h5>
+                        <i class="card-brand" th:text="'~ ' + ${product.brand}"></i>
+                        <hr class="hr-line">
+                        <div class="home-cart-price">
+                            <h5 class="card-text">
+                                <span th:text="'$' + (${product.price != null} ? ${product.price} : '0.00')"></span>
+                            </h5>
+                        </div>
+                        <form th:action="@{/cart/add}" method="post">
+                            <input type="hidden" name="productId" th:value="${product.id}">
+                            <button type="submit" class="btn-hover color-9"
+                                    th:disabled="${product.stockQuantity <= 0 or !product.productAvailable}">
+                                <span th:if="${product.stockQuantity > 0 and product.productAvailable}" th:text="#{product.add_to_cart}">Add to Cart</span>
+                                <span th:unless="${product.stockQuantity > 0 and product.productAvailable}" th:text="#{product.out_of_stock}">Out of Stock</span>
+                            </button>
+                        </form>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

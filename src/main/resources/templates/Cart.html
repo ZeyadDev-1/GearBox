@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <th:block th:include="navbar"></th:block>
+    <div class="cart-container">
+        <div class="shopping-cart">
+            <div class="title" th:text="#{cart.title}">Shopping Bag</div>
+            <div class="empty" th:if="${#lists.isEmpty(cartItems)}">
+                <h4 th:text="#{cart.empty}">Your cart is empty</h4>
+            </div>
+            <div th:unless="${#lists.isEmpty(cartItems)}">
+                <ul>
+                    <li class="cart-item" th:each="item : ${cartItems}">
+                        <div class="item">
+                   <img th:src="@{'/product/' + ${item.product.id} + '/image'}" 
+                                 th:alt="${item.product.name} ?: 'Unknown Product'" 
+                                 class="cart-item-image"
+                                 onerror="this.src='/images/placeholder.jpg'">
+                     <div class="description">
+                     <span th:text="${item.product.brand} ?: 'Unknown Brand'"></span>
+                     <span th:text="${item.product.name} ?: 'Unknown Product'"></span>
+                     </div>
+                         <div class="quantity">
+                       <form th:action="@{/cart/update}" method="post" class="d-inline">
+                          <input type="hidden" name="itemId" th:value="${item.product.id}">
+                           <button class="plus-btn" name="action" value="increase"
+                th:disabled="${item.quantity >= (item.product.stockQuantity ?: 0)}">+</button>
+                          <input type="text" th:value="${item.quantity}" readonly>
+                       <button class="minus-btn" name="action" value="decrease">-</button>
+                      </form>
+                            </div>
+                            <div class="total-price" 
+               th:text="'$' + (${item.totalPrice != null} ? ${item.totalPrice} : '0.00')"></div>
+                      <form th:action="@{/cart/remove}" method="post" class="d-inline">
+                                <input type="hidden" name="itemId" th:value="${item.product.id}">
+                                <button class="remove-btn"><i class="bi bi-trash3-fill"></i></button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+                <div class="total" th:text="#{cart.total} + ': $' + (${totalPrice != null} ? ${totalPrice} : '0.00')"></div>
+                <a href="/checkout" class="btn btn-primary" th:text="#{cart.checkout}">Checkout</a>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
