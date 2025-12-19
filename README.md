@@ -2,7 +2,7 @@
 
 A simple and modern e-commerce web app built with Spring Boot. Shop for laptops, headphones, mobiles, electronics, toys, and fashion!
 
-Perfect university project turned into a full-featured online store by founders **Ziad** and **Omer** in 2025.
+A full-featured online store by founders **Ziad** and **Omer** in 2025.
 
 ## 🚀 Features
 - 🏠 Browse products on homepage  
